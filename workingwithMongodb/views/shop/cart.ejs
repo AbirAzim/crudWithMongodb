@@ -1,0 +1,53 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+    <%- include('../includes/nav.ejs') %>
+    <main>
+        <% if(cart.length > 0) { %>
+
+        <div class="container">
+            <div class="row">
+                <% cart.forEach(item => { %>
+                <div class="col-sm-4">
+                    <div class="card" style="width: 22rem;">
+                        <img class="card-img-top" src=<%= item.imageUrl %> alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Name : <span class="text-primary"><%= item.productName %></span></h5>
+                            <h5 class="card-title text-dander">Price : <span
+                                    class="text-danger"><%= item.productPrice %></span></h5>
+                            <h5 class="card-title text-secondary">Quantity : <span
+                                    class="text-secondary"><%= item.quantity %></span></h5>
+                            <p class="card-text"><%= item.description %></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                        <div class="card-body">
+                            <form action="/cart-delete-item" method="POST">
+                                <input type="hidden" value="<%= item._id %>" name="productId">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            <% if(cart.length > 0) { %>
+            <form action="/create-order" method="POST" class="mt-2 text-center">
+                <button class="btn btn-secondary" type="submit">Order Now !</button>
+            </form>
+            <% } %>
+        </div>
+
+
+
+        <% } else {%>
+        <div class="container">
+            <h1 class="text-center">No Products Added in Cart</h1>
+        </div>
+        <% }%>
+    </main>
+
+    <%- include('../includes/end.ejs') %>
